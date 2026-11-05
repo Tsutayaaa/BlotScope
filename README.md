@@ -2,10 +2,10 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 ![README views](https://komarev.com/ghpvc/?username=Tsutayaaa-blotscope&label=README%20views&color=blue)
-[![Downloads](https://img.shields.io/github/downloads/Tsutayaaa/blotscope/total?label=Downloads)](https://github.com/Tsutayaaa/blotscope/releases)
+[![Downloads](https://img.shields.io/github/downloads/Tsutayaaa/wb_tool/total?label=Downloads)](https://github.com/Tsutayaaa/wb_tool/releases)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![Platform](https://img.shields.io/badge/macOS-Apple%20Silicon-black?logo=apple&logoColor=white)
-[![Release](https://img.shields.io/github/v/release/Tsutayaaa/blotscope)](https://github.com/Tsutayaaa/blotscope/releases/latest)
+[![Release](https://img.shields.io/github/v/release/Tsutayaaa/wb_tool)](https://github.com/Tsutayaaa/wb_tool/releases/latest)
 
 <img src="docs/blotscope-logo.png" alt="BlotScope logo" width="120">
 
@@ -13,7 +13,7 @@
 
 Draw a marker lane, automatically assign a ladder preset, fit the calibration, and draw target lanes to identify bands and estimate their apparent molecular weights. Review the detected peaks, confidence, and uncertainty before exporting your results. Images are processed locally and are not uploaded.
 
-[![Download BlotScope for macOS — Apple Silicon](https://img.shields.io/badge/Download_for_macOS-Apple_Silicon-007AFF?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/Tsutayaaa/blotscope/releases/tag/v1.0.1)
+[![Download BlotScope for macOS — Apple Silicon](https://img.shields.io/badge/Download_for_macOS-Apple_Silicon-007AFF?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/Tsutayaaa/wb_tool/releases/latest)
 
 **Download → Unzip → Move to Applications → Open** · No Python required.
 
@@ -31,11 +31,11 @@ Previously named **WB Marker**. This release updates the project name to **BlotS
 
 ## Download and install
 
-1. Open **[v1.0.1 Release](https://github.com/Tsutayaaa/blotscope/releases/tag/v1.0.1)** and download the macOS arm64 ZIP from **Assets**. Choose the app ZIP, rather than GitHub’s automatically generated source-code archives.
+1. Open **[Latest release](https://github.com/Tsutayaaa/wb_tool/releases/latest)** and download the macOS arm64 ZIP from **Assets**. Choose the app ZIP, rather than GitHub’s automatically generated source-code archives.
 2. Extract the ZIP and drag **BlotScope.app** into **Applications**.
 3. Double-click the app to start. **No Python or dependency installation is required.**
 
-**Compatibility:** macOS on Apple Silicon (M1 or later). Intel Mac, Windows, and Linux builds are not currently provided. The **v1.0.1 stable release** includes the target-band annotation fix and the custom app icon.
+**Compatibility:** macOS on Apple Silicon (M1 or later). Intel Mac, Windows, and Linux builds are not currently provided. The stable app includes the target-band annotation fix and the custom app icon.
 
 The app is not Developer ID signed or Apple notarized. If macOS blocks the first launch and you trust the download, follow [Apple’s instructions](https://support.apple.com/en-us/102445) to approve it in **System Settings → Privacy & Security**.
 
@@ -176,7 +176,7 @@ Report results as **apparent molecular weight**, rather than exact protein mass.
 | Issue | What to check |
 | --- | --- |
 | macOS blocks the app | Confirm the download is trusted and follow [Apple’s opening-app guidance](https://support.apple.com/en-us/102445). |
-| Target bands are detected but points do not appear | Install the [v1.0.1 stable release](https://github.com/Tsutayaaa/blotscope/releases/tag/v1.0.1). |
+| Target bands are detected but points do not appear | Install the [latest stable release](https://github.com/Tsutayaaa/wb_tool/releases/latest). |
 | Too many or too few peaks | Check image polarity and lane placement; adjust advanced detection settings or edit peaks manually. |
 | Preset assignments do not match the ladder | Remove false peaks, check missing bands, and edit kDa values or assign from a known anchor. |
 | Calibration fails | Assign at least two finite, positive kDa values at distinct positions, descending along migration. |
@@ -192,7 +192,7 @@ The sections above describe the packaged app. Source usage requires **macOS and 
 ### Run from source
 
 ```bash
-git clone https://github.com/Tsutayaaa/blotscope.git
+git clone https://github.com/Tsutayaaa/wb_tool.git blotscope
 cd blotscope
 python3 -m tkinter  # Verify Tk works, then close the demo window.
 python3 -m venv .venv

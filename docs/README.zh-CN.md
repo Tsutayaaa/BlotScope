@@ -2,16 +2,16 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
 ![README views](https://komarev.com/ghpvc/?username=Tsutayaaa-blotscope&label=README%20views&color=blue)
-[![Downloads](https://img.shields.io/github/downloads/Tsutayaaa/blotscope/total?label=Downloads)](https://github.com/Tsutayaaa/blotscope/releases)
+[![Downloads](https://img.shields.io/github/downloads/Tsutayaaa/wb_tool/total?label=Downloads)](https://github.com/Tsutayaaa/wb_tool/releases)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![Platform](https://img.shields.io/badge/macOS-Apple%20Silicon-black?logo=apple&logoColor=white)
-[![Release](https://img.shields.io/github/v/release/Tsutayaaa/blotscope)](https://github.com/Tsutayaaa/blotscope/releases/latest)
+[![Release](https://img.shields.io/github/v/release/Tsutayaaa/wb_tool)](https://github.com/Tsutayaaa/wb_tool/releases/latest)
 
 <img src="blotscope-logo.png" alt="BlotScope 图标" width="120">
 
 **在 Mac 上快速估算 Western blot 条带的表观分子量。**
 
-[English README](../README.md) · [下载 v1.0.1 正式版](https://github.com/Tsutayaaa/blotscope/releases/tag/v1.0.1)
+[English README](../README.md) · [下载最新正式版](https://github.com/Tsutayaaa/wb_tool/releases/latest)
 
 ## 作者说明
 
@@ -21,7 +21,7 @@ PAGE 和 Western blot 的迁移位置用于近似大小比较；条带强度在�
 
 ## 下载与安装
 
-1. 打开 [v1.0.1 Release](https://github.com/Tsutayaaa/blotscope/releases/tag/v1.0.1)，从 **Assets** 下载 `BlotScope-v1.0.1-macOS-arm64.zip`，不要选择自动生成的源码压缩包。
+1. 打开 [最新正式版](https://github.com/Tsutayaaa/wb_tool/releases/latest)，从 **Assets** 下载最新的 macOS arm64 ZIP（文件名如 `BlotScope-vX.Y.Z-macOS-arm64.zip`），不要选择自动生成的源码压缩包。
 2. 解压后将 **BlotScope.app** 拖到“应用程序”。
 3. 双击启动，**无需安装 Python 或依赖**。
 
@@ -191,7 +191,7 @@ range_status, confidence, reported_MW, reported_MW_text, warnings
 需要 macOS、Python 3.10+ 和可用的 Tk。完整开发和打包说明见 [英文 README](../README.md#for-developers) 与 [打包指南](packaging.md)。
 
 ```bash
-git clone https://github.com/Tsutayaaa/blotscope.git
+git clone https://github.com/Tsutayaaa/wb_tool.git blotscope
 cd blotscope
 python3 -m venv .venv
 source .venv/bin/activate
