@@ -1,5 +1,12 @@
 # WB Marker 中文说明
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
+![README views](https://komarev.com/ghpvc/?username=Tsutayaaa-wb-tool&label=README%20views&color=blue)
+[![Downloads](https://img.shields.io/github/downloads/Tsutayaaa/wb_tool/total?label=Downloads)](https://github.com/Tsutayaaa/wb_tool/releases)
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![Platform](https://img.shields.io/badge/macOS-Apple%20Silicon-black?logo=apple&logoColor=white)
+[![Release](https://img.shields.io/github/v/release/Tsutayaaa/wb_tool)](https://github.com/Tsutayaaa/wb_tool/releases/latest)
+
 <img src="WB%20logo.png" alt="WB Marker 图标" width="120">
 
 **在 Mac 上快速估算 Western blot 条带的表观分子量。**
@@ -197,3 +204,9 @@ python -m wb_tools --language zh
 ## AI 声明与致谢
 
 本工具由 [Tsutayaaa](https://github.com/Tsutayaaa) 独立开发与维护，项目方向、功能取舍及最终审核由开发者负责。开发过程中使用 OpenAI Codex 辅助实现、重构、调试、测试、打包与文档编写。感谢 Codex 提供的高效帮助，以及将想法落实为可用功能的能力。
+
+## 开源协议
+
+本项目采用 [MIT 协议](../LICENSE)，版权所有 © 2026 Tsutayaaa。第三方依赖保留各自的许可证。
+
+浏览量徽章是第三方图片加载计数的近似值，不代表 GitHub 官方仓库访问量或独立访客数；下载量统计各 Release 附件的下载次数。

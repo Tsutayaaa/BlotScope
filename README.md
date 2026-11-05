@@ -1,5 +1,12 @@
 # WB Marker
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+![README views](https://komarev.com/ghpvc/?username=Tsutayaaa-wb-tool&label=README%20views&color=blue)
+[![Downloads](https://img.shields.io/github/downloads/Tsutayaaa/wb_tool/total?label=Downloads)](https://github.com/Tsutayaaa/wb_tool/releases)
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![Platform](https://img.shields.io/badge/macOS-Apple%20Silicon-black?logo=apple&logoColor=white)
+[![Release](https://img.shields.io/github/v/release/Tsutayaaa/wb_tool)](https://github.com/Tsutayaaa/wb_tool/releases/latest)
+
 <img src="docs/WB%20logo.png" alt="WB Marker logo" width="120">
 
 **Estimate apparent protein molecular weight from Western blot images — directly on your Mac.**
@@ -246,3 +253,9 @@ User settings are stored under `~/Library/Application Support/WB Marker/`. The h
 WB Marker is independently developed and maintained by [Tsutayaaa](https://github.com/Tsutayaaa). The project’s direction, feature decisions, and final review are the developer’s responsibility.
 
 OpenAI Codex was used as an AI development assistant for implementation, refactoring, debugging, testing, packaging, and documentation. Special thanks to Codex for its efficient assistance and ability to turn ideas into working features.
+
+## License
+
+Released under the [MIT License](LICENSE). Copyright © 2026 Tsutayaaa. Third-party dependencies retain their own licenses.
+
+The views badge is an approximate third-party image-load counter, not GitHub’s repository traffic analytics or a unique-visitor count. Downloads counts GitHub Release asset downloads across releases.
