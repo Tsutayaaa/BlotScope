@@ -42,7 +42,7 @@ from .core import (
     BUILTIN_PRESETS,
  )
 from .imaging import sample_line_intensity
-from .presets import PRODUCT_PRESETS, band_color, BLUE, ORANGE, GREEN
+from .presets import PRODUCT_PRESETS, band_color, BLUE, ORANGE, GREEN, RED
 from .i18n import config_dir, save_language, set_language
 
 class WBMarkerApp(tk.Tk):
@@ -276,7 +276,7 @@ class WBMarkerApp(tk.Tk):
         self.tree.column("kda", width=110, anchor=tk.CENTER)
         self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         self._responsive_tree(self.tree)
-        for color in (BLUE, ORANGE, GREEN):
+        for color in (BLUE, ORANGE, GREEN, RED):
             self.tree.tag_configure(color, foreground=color)
         scrollbar = ttk.Scrollbar(peak_frame, command=self.tree.yview)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)

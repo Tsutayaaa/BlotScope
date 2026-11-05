@@ -1,7 +1,7 @@
 from wb_tools.core import BUILTIN_PRESETS, prepare_markers
 from wb_tools.presets import PRODUCT_PRESETS, band_color, BLUE, ORANGE, GREEN
 
-PLUS, STANDARD = PRODUCT_PRESETS
+PLUS, STANDARD = list(PRODUCT_PRESETS)[:2]
 
 
 def test_manufacturer_nominal_values():
@@ -10,7 +10,7 @@ def test_manufacturer_nominal_values():
     for name, product in PRODUCT_PRESETS.items():
         values = BUILTIN_PRESETS[name]
         assert prepare_markers(range(len(values)), values)
-        assert product["source"].startswith("https://www.thermofisher.com/")
+        assert product["source"].startswith("https://")
 
 
 def test_reference_colors_are_product_specific():
@@ -22,3 +22,12 @@ def test_reference_colors_are_product_specific():
         assert band_color(name, 130) == BLUE
     assert band_color("Custom", 25) is None
     assert band_color(PLUS, 40) is None
+
+
+def test_solarbio_pr2090_values_and_colors():
+    from wb_tools.presets import RED
+    name = "Solarbio PR2090 (20–600 kDa)"
+    assert BUILTIN_PRESETS[name] == [600, 400, 250, 230, 130, 110, 75, 45, 20]
+    assert band_color(name, 75) == RED
+    assert band_color(name, 20) == GREEN
+    assert band_color(name, 600) == BLUE

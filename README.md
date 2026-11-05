@@ -1,211 +1,216 @@
-# WB Tools — WB Marker
+# WB Marker
 
-A local desktop tool for estimating **apparent molecular weight** from Western blot images. Calibrate against marker bands, analyze target lanes, compare multiple marker groups, and export band-level results with calibration diagnostics. Images are processed on your computer and are not uploaded.
+<img src="docs/WB%20logo.png" alt="WB Marker logo" width="120">
 
-**Currently supported platform: macOS.** The current packaged app is built for Apple Silicon (arm64). Intel builds are not supplied or verified. Windows and Linux are not currently supported releases.
+**Estimate apparent protein molecular weight from Western blot images — directly on your Mac.**
 
-**Interface:** English by default, with Simplified Chinese available under **Language / 语言**. Save your results and restart the app after changing the language.
+Draw a marker lane, automatically assign a ladder preset, fit the calibration, and draw target lanes to identify bands and estimate their apparent molecular weights. Review the detected peaks, confidence, and uncertainty before exporting your results. Images are processed locally and are not uploaded.
 
-[中文使用说明](docs/wb-marker.md) · [Build and distribution guide](docs/packaging.md)
+[![Download WB Marker for macOS — Apple Silicon](https://img.shields.io/badge/Download_for_macOS-Apple_Silicon-007AFF?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/Tsutayaaa/wb_tool/releases/tag/v1.0.0)
 
-> **Screenshot placeholder — main window**
->
-> Add `docs/images/main-window.png`, then uncomment the image below.
-<!-- ![WB Marker main window](docs/images/main-window.png) -->
+**Download → Unzip → Move to Applications → Open** · No Python required.
 
-## Choose how to run it
+[How to use](#how-to-use) · [Import images & channels](#1-import-images-and-channels) · [中文说明](docs/wb-marker.md)
 
-| Option | Suitable for | Requirements |
+## A note from the developer
+
+I built WB Marker to help researchers quickly estimate apparent molecular weight and support day-to-day experimental work. My aim is to make image-based comparisons more consistent and reproducible through an explicit calibration workflow.
+
+PAGE and Western blot migration provide approximate size comparisons; band intensity can support semiquantitative analysis under appropriate experimental conditions. This tool estimates apparent molecular weight from migration—it does not establish protein identity or a precise molecular mass. Its numerical outputs are not standalone evidence and cannot, by themselves, support an experimental conclusion. Please interpret them alongside appropriate controls, the original images, and independent validation.
+
+Use WB Marker as a practical aid for preliminary assessment and planning follow-up experiments. A consistent analysis procedure helps with comparison, but does not remove the limitations of the underlying experiment.
+
+## Download and install
+
+1. Open **[v1.0.0 Release](https://github.com/Tsutayaaa/wb_tool/releases/tag/v1.0.0)** and download the macOS arm64 ZIP from **Assets**. Choose the app ZIP, rather than GitHub’s automatically generated source-code archives.
+2. Extract the ZIP and drag **WB Marker.app** into **Applications**.
+3. Double-click the app to start. **No Python or dependency installation is required.**
+
+**Compatibility:** macOS on Apple Silicon (M1 or later). Intel Mac, Windows, and Linux builds are not currently provided. The **v1.0.0 stable release** includes the target-band annotation fix and the custom app icon.
+
+The app is not Developer ID signed or Apple notarized. If macOS blocks the first launch and you trust the download, follow [Apple’s instructions](https://support.apple.com/en-us/102445) to approve it in **System Settings → Privacy & Security**.
+
+To update, quit the app and replace the old copy in Applications. Custom presets and language preferences are retained separately. The interface defaults to English; choose **Language / 语言 → 简体中文** for Chinese, then save your results and restart.
+
+## What you can do
+
+- **Calibrate from marker lanes:** detect peaks automatically, apply named ladder presets, and correct assignments manually.
+- **Analyze multiple target lanes:** see band positions on the image and intensity profile, with results organized by lane.
+- **Use separate marker and target channels:** import aligned images from the same blot and switch between them during analysis.
+- **Compare multiple marker groups:** calibrate more than one marker lane and select a suitable calibration for each target band automatically.
+- **Inspect and export results:** review report text, confidence, uncertainty, and calibration diagnostics; save CSV, Excel, or JSON.
+
+## How to use
+
+### 1. Import images and channels
+
+Click **1 Import images** to select your gel or blot images. **You can select multiple files in the file picker and import them together in one step** (Command-click individual files or Shift-click a range on macOS). PNG, JPEG, TIFF, and BMP are supported.
+
+Use dark bands on a light background. Navigate with **Fit to window**, **+ / −**, scrollbars, or Command + mouse wheel.
+
+On a Western blot, the visible marker and target-protein signal may be captured in separate images. Select those images together when importing, then switch between them using **Channel**.
+
+![Channel selector showing merged, marker, and target-lane images from one blot](docs/images/multi_layers.png)
+
+For example, the screenshot shows three imported channels:
+
+| Channel | Typical use |
+| --- | --- |
+| `Blot_sample_merge.tif` | Inspect the combined image and overall alignment |
+| `Blot_sample_marker.tif` | Draw the marker lane, assign kDa, and fit calibration |
+| `Blot_sample_lanes.tif` | Draw target lanes and analyze the protein signal |
+
+Calibrate on the **marker channel**, then switch to the **target channel** and add target lanes. The calibration remains available across channels, so marker and target bands do not need to be visible in the same image. A merged image is optional.
+
+**Images must already be aligned in pixel coordinates and should have identical dimensions.** Export channels with the same crop, scale, and orientation. The app does not automatically register images; independently cropped or resized channels can produce incorrect estimates.
+
+Here “channels” are separately imported image files. Export the layers/channels from your imaging software before importing them.
+
+### 2. Draw the marker lane and apply a preset
+
+1. Select **Draw marker lane**.
+2. Drag down the center of the marker lane, from the loading-well/top direction toward the bottom.
+3. Review the detected peaks on the image and intensity profile.
+4. Choose your ladder under **Marker preset · kDa**, then click **Apply full preset** to fill the detected peaks in migration order.
+5. Verify the kDa assignments, then click **Fit markers & continue →**.
+
+![Draw a marker lane, automatically assign a ladder preset, and fit the calibration](docs/images/draw_the_marker_line.gif)
+
+**Check assignments before fitting.** Applying a preset fills values in order; it does not identify the ladder or determine which bands are missing. Extra peaks, faint bands, or a missing marker band can shift the assignments.
+
+Click the intensity profile to add or remove peaks, and double-click a kDa cell to edit its value. Leave unidentified peaks blank. Calibration requires at least two known peaks at distinct positions, with kDa decreasing along migration. Expand **Advanced peak detection** when smoothing, prominence, spacing, or lane half-width needs adjustment.
+
+### 3. Draw target lanes and inspect the bands
+
+After fitting, the app opens **Target lane analysis**.
+
+1. If necessary, switch **Channel** to the target-protein image.
+2. Select **Add target lane** and drag down its center, in the same migration direction as the marker lane.
+3. The app detects bands and marks them on both the image and the lane intensity profile.
+4. Add more lanes, then select a lane in **Target lanes** to review its peaks.
+5. Read the **Band results by lane** table. Select a result and expand **Selected band details** to inspect its marker group, local estimate, uncertainty range, and range status.
+
+![Draw target lanes, review detected bands, and inspect molecular weight results](docs/images/target_analysis.gif)
+
+Click the target profile to add or remove peaks manually. To change detection settings, expand **Advanced peak detection** and click **Re-detect selected lane**. Review automatic detections before reporting results.
+
+### 4. Save your results
+
+Click **Save results** and choose **CSV**, **Excel (.xlsx)**, or **JSON**. Excel places **Lane summary** first, with detailed estimates in **Band results**.
+
+The app also saves companion reports in the same folder:
+
+| File | Contents |
+| --- | --- |
+| `lane_summary.csv` | One row per lane, with its band estimates |
+| `calibration_report.csv` | Marker back-calculation and local leave-one-out errors |
+| `fit_summary.csv` | Global fit and local cross-validation metrics |
+| `calibration_diagnostic*.svg` | Marker points, interpolation, global fit, and residuals |
+| `calibration_error_vs_mw*.svg` | Calibration errors versus marker molecular weight |
+
+**Save each analysis in a separate folder** to avoid overwriting companion reports. Exports contain results and diagnostics; they do not restore an editable analysis session. Save results before quitting or restarting the app.
+
+## Marker presets and reference colors
+
+Choose a preset to preview its nominal kDa values and fill your marker peaks automatically. The full product name and catalog numbers appear below the selector.
+
+![Built-in marker presets including Thermo Scientific PageRuler and Solarbio PR2090](docs/images/marker_selection.png)
+
+| Brand / product | Bands, high → low (kDa) | Reference colors |
 | --- | --- | --- |
-| Packaged `WB Marker.app` | Everyday image analysis | A compatible Apple Silicon Mac; no Python installation needed |
-| Run from source | Development, customization, or rebuilding | macOS, Python 3.10+ with Tk, and the dependencies below |
+| **Thermo Scientific™ PageRuler™ Plus Prestained Protein Ladder, 10 to 250 kDa** (#26619 / #26620) | 250, 130, 100, 70, 55, 35, 25, 15, 10 | 70 and 25: orange/red; 10: green; others: blue |
+| **Thermo Scientific™ PageRuler™ Prestained Protein Ladder, 10 to 180 kDa** (#26616 / #26617) | 180, 130, 100, 70, 55, 40, 35, 25, 15, 10 | 70: orange/red; 10: green; others, including 25: blue |
+| **Solarbio 3-color Pre-dyed Protein Marker, 20–600 kDa** (PR2090) | 600, 400, 250, 230, 130, 110, 75, 45, 20 | 75: red; 20: green; others: blue |
+| **Generic 170–10 kDa** (not assigned to a brand) | 170, 130, 100, 70, 55, 40, 35, 25, 15, 10 | No product-specific reference colors |
 
-The `.app` is a build artifact, not part of the source checkout. Cloning this repository alone does not install the packaged app. A public download is not currently documented here; obtain the app from the maintainer or build it using the instructions below.
+The older **600–20 kDa** generic entry remains available for compatibility; use **Solarbio PR2090 (20–600 kDa)** for its product name and reference colors.
 
-## Use the packaged macOS app
+After applying a product preset, its reference colors appear in the marker table, profile, and image annotations. Colors help orient the ladder; they do not classify bands automatically. Verify the nominal values against your product documentation and gel system.
 
-1. Obtain `WB Marker.app` (or extract the ZIP containing it).
-2. Drag the **whole app** into your **Applications** folder. Do not extract its internal executable.
-3. Double-click **WB Marker** to start. You do not need Terminal, Python, or a virtual environment.
-4. Choose **Language / 语言 → English** or **简体中文** if desired. The choice takes effect on the next launch; the current analysis is not reset.
-5. Click **1 Import images** and follow the workflow below.
+### Create your own marker preset
 
-The current local build is not Developer ID signed or Apple notarized. macOS may ask for approval before opening an app received from another computer. Only approve a copy you trust, using macOS Privacy & Security settings if necessary. See [Apple’s opening-app guidance](https://support.apple.com/en-us/102445). Formal public distribution requires a signed and notarized build.
+**You can use ladders from any brand by defining your own preset.**
 
-To update, quit WB Marker and replace the old `.app` with the newer one. Language preferences and custom presets are stored separately in:
+1. Expand **Custom preset & anchor assignment**.
+2. Enter the known molecular weights from high to low, separated by spaces or commas, for example `180, 130, 100, 70, 55, 40, 35, 25, 15, 10`.
+3. Click **Save new preset** and give it a recognizable brand/product name.
+4. Choose the saved preset and click **Apply full preset**, then verify its correspondence to the detected peaks.
 
-```text
-~/Library/Application Support/WB Marker/
-├── settings.json
-└── marker_presets.json
-```
+![Define molecular weight values and save a custom marker preset](docs/images/maker_customize.gif)
 
-These settings survive replacement of the app. Exported results stay wherever you save them. Analysis sessions are **not automatically restored**: save results before quitting or restarting to change language.
+Saved presets remain available after restarting or replacing the app. If only part of a ladder is visible, select a known peak and use **Assign downward from selected peak**. Custom presets store molecular weight values; product-specific colors are provided for the named built-in ladders.
 
-## Run from source on macOS
+Product references: [Solarbio PR2090](https://www.solarbio.com/goodsInfo?id=365799) · [PageRuler Plus](https://www.thermofisher.com/order/catalog/product/26619) · [PageRuler](https://www.thermofisher.com/order/catalog/product/26616).
 
-### 1. Get the repository
+## Additional controls
+
+Advanced controls are collapsed to keep the main workflow compact:
+
+| Control | Use it to… |
+| --- | --- |
+| **Manage marker groups** | Select or remove a calibration group after drawing multiple marker lanes |
+| **Advanced peak detection** | Adjust smoothing, prominence, minimum peak spacing, and lane half-width |
+| **Custom preset & anchor assignment** | Save custom ladders or assign downward from a known band |
+| **Calibration diagnostics** | Inspect the detailed fit and cross-validation summary |
+| **Selected band details** | Inspect the full estimate behind a compact result row |
+
+Each marker group retains its own assignments and product association. With multiple fitted groups, the app selects calibration separately for each target band, prioritizing range coverage and estimated uncertainty.
+
+## Understanding the estimates
+
+The recommended value comes from **local log-linear interpolation between neighboring markers**. A global linear regression is also calculated for diagnostics. Peak widths and local leave-one-out calibration errors contribute to a heuristic uncertainty range.
+
+Report results as **apparent molecular weight**, rather than exact protein mass. The uncertainty range is not a validated statistical confidence interval. Bands outside the marker range are flagged as extrapolations with very low confidence and preferentially reported as above/below the calibrated range. Gel distortion, transfer, glycosylation, aggregation, and unusual migration can introduce systematic error even with a high R².
+
+## Troubleshooting
+
+| Issue | What to check |
+| --- | --- |
+| macOS blocks the app | Confirm the download is trusted and follow [Apple’s opening-app guidance](https://support.apple.com/en-us/102445). |
+| Target bands are detected but points do not appear | Install the [v1.0.0 stable release](https://github.com/Tsutayaaa/wb_tool/releases/tag/v1.0.0). |
+| Too many or too few peaks | Check image polarity and lane placement; adjust advanced detection settings or edit peaks manually. |
+| Preset assignments do not match the ladder | Remove false peaks, check missing bands, and edit kDa values or assign from a known anchor. |
+| Calibration fails | Assign at least two finite, positive kDa values at distinct positions, descending along migration. |
+| Different channels produce inconsistent positions | Verify pixel alignment, dimensions, crop, and orientation. |
+| Language has not changed | Save results, quit, and reopen after selecting the language. |
+
+---
+
+## For developers
+
+The sections above describe the packaged app. Source usage requires **macOS and Python 3.10+ with Tk support**.
+
+### Run from source
 
 ```bash
 git clone https://github.com/Tsutayaaa/wb_tool.git
 cd wb_tool
-```
-
-If you already have a checkout, open Terminal in that directory instead.
-
-### 2. Check Python and Tk
-
-Use Python **3.10 or newer** with working Tkinter:
-
-```bash
-python3 --version
-python3 -m tkinter
-```
-
-The second command should open a small Tk demonstration window; close it before continuing. If `_tkinter` is missing, install a Python distribution with Tk support, then create the virtual environment using that interpreter. The `python.org` macOS installer is one option. Tkinter is not installed with `pip install tkinter`.
-
-### 3. Create an isolated environment and install dependencies
-
-```bash
+python3 -m tkinter  # Verify Tk works, then close the demo window.
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
-```
-
-Runtime dependencies are Pillow for image processing and openpyxl for Excel exports. First-time installation needs an internet connection; normal image analysis runs locally.
-
-### 4. Launch
-
-```bash
 python -m wb_tools
 ```
 
-Choose a language for a single launch:
+Use `python -m wb_tools --language en` or `--language zh` for a single-launch language override. `python main.py`, `python wb_marker_tool.py`, and the macOS `run_wb_tool.command` launcher remain supported. The launcher creates a virtual environment and installs missing dependencies on first use.
+
+### Test and build
 
 ```bash
-python -m wb_tools --language en
-python -m wb_tools --language zh
+python -m pip install -r requirements-dev.txt
+python -m pytest -q
+# Optional real-window tests in a desktop session:
+WB_MARKER_GUI_TESTS=1 python -m pytest -q
+
+python3 -m venv .venv-build
+.venv-build/bin/python -m pip install -r requirements-build-lock.txt
+.venv-build/bin/python scripts/build_app.py
 ```
 
-The optional `WB_MARKER_LANGUAGE=en` or `WB_MARKER_LANGUAGE=zh` environment variable overrides the saved preference; `--language` takes precedence over both. CLI overrides do not change the saved preference.
+Build output: `dist/WB Marker.app`. See the [build and distribution guide](docs/packaging.md) for architecture, ZIP packaging, and signing details.
 
-The existing entry points also work:
+### Calculation API
 
-```bash
-python main.py
-python wb_marker_tool.py
-```
-
-Alternatively, double-click `run_wb_tool.command` in Finder, or run:
-
-```bash
-zsh run_wb_tool.command
-```
-
-The launcher creates `.venv` if needed, installs missing runtime dependencies, and starts the app. It needs a Python installation with Tk support and may access the network on first launch. It is a source launcher, not the standalone packaged app.
-
-For later sessions, activate the environment again before launching:
-
-```bash
-cd /path/to/wb_tool
-source .venv/bin/activate
-python -m wb_tools
-```
-
-## Interface in v0.4.0
-
-Analysis panels fit the window width without horizontal scrolling. Long product names and instructions wrap. Advanced peak detection, marker group management, custom preset/anchor assignment, and calibration diagnostics are collapsed by default; click their disclosure buttons to expand them.
-
-The target result table shows lane, band, recommended report, and confidence. Select a row and expand **Selected band details** for marker group, pixel position, local kDa, uncertainty range, and range status. Full exported columns are unchanged.
-
-### Named marker presets
-
-| Product | Nominal bands (kDa, descending) | Reference colors |
-| --- | --- | --- |
-| PageRuler™ Plus Prestained Protein Ladder, 10 to 250 kDa (#26619 / #26620) | 250, 130, 100, 70, 55, 35, 25, 15, 10 | 70 and 25: orange/red; 10: green; others: blue |
-| PageRuler™ Prestained Protein Ladder, 10 to 180 kDa (#26616 / #26617) | 180, 130, 100, 70, 55, 40, 35, 25, 15, 10 | 70: orange/red; 10: green; others, including 25: blue |
-
-The selector uses short product names; the full product name, catalog numbers, and colored kDa preview appear below it. After applying a product preset, the peak table, profile annotations, and active marker image annotations use its reference colors. Each marker group retains its own product association. Browsing another preset does not change existing assignments.
-
-Colors are orientation aids, not automatic band identification. These are nominal manufacturer reference values; check your ladder documentation and gel system before assignment. Existing generic and custom presets remain available.
-
-Sources: [Thermo Fisher PageRuler Plus](https://www.thermofisher.com/order/catalog/product/26619), [Thermo Fisher PageRuler](https://www.thermofisher.com/order/catalog/product/26616).
-
-## Analyze a Western blot
-
-### 1. Prepare and import images
-
-- Supported images: PNG, JPEG, TIFF, and BMP.
-- Use images with dark bands on a light background: peak detection samples inverted grayscale intensity.
-- Import the marker and target channels together with **1 Import images**. A single image containing both is also usable.
-- Multiple channels must already be aligned in pixel coordinates and should have the same dimensions. The app does not register or align channels automatically.
-- Select the active image with **Channel**. Use **+**, **−**, **Fit to window**, scrollbars, or Command + mouse wheel to navigate.
-
-### 2. Draw and calibrate marker lanes
-
-1. Select the marker image channel and **Draw marker lane**.
-2. Drag along the center of the marker lane, from the loading-well/top direction toward the bottom. Each new line creates a separate marker group.
-3. Review the intensity profile and detected peaks. Expand **Advanced peak detection** to adjust smoothing radius, prominence, minimum peak spacing, and lane half-width, then click **Detect peaks again** if needed. The sampling width is `2 × half-width + 1` pixels.
-4. Click the profile to add or remove peaks manually.
-5. Double-click a peak's **kDa** cell to enter its known marker value. Leave unidentified peaks blank. Assign at least two known peaks, with kDa decreasing along migration.
-6. Alternatively, choose a built-in preset, or expand **Custom preset & anchor assignment** and enter a descending list such as `170, 130, 100, 70, 55, 40, 35, 25, 15, 10`. Use **Apply full preset**, or select a known peak and use **Assign downward from selected peak**. Verify the mapping when marker bands are missing or faint.
-7. Under **Custom preset & anchor assignment**, use **Save new preset** to retain a custom ladder for later sessions.
-8. Repeat for additional marker lanes if useful. Each group has its own peak assignments and calibration. Expand **Manage marker groups** to select or remove a group.
-9. Click **Fit markers & continue →**. Review calibration messages; invalid groups may be excluded. Return to the marker tab and expand **Calibration diagnostics** for the detailed fit.
-
-> **Screenshot placeholder — marker calibration**
->
-> Add `docs/images/marker-calibration.png`, then uncomment the image below.
-<!-- ![Marker peaks, kDa assignments, and calibration](docs/images/marker-calibration.png) -->
-
-### 3. Analyze target lanes
-
-1. Switch to the target image channel.
-2. Select **Add target lane** and drag from the top to the bottom along its center, in the same migration direction as the marker lanes.
-3. Select the lane in the list to review its detected bands and intensity profile.
-4. Expand **Advanced peak detection** to adjust target detection parameters and use **Re-detect selected lane**, or click the profile to add/remove band peaks manually.
-5. Repeat for the remaining target lanes.
-6. Review the compact band table, then select a row and expand **Selected band details** to inspect its selected marker group, local estimate, uncertainty range, and range status.
-
-Coordinates must be comparable across channels and lanes. Slanted lanes, distorted gels, or misaligned channels can compromise calibration even when the fit statistics look good.
-
-> **Screenshot placeholder — target analysis and results**
->
-> Add `docs/images/target-results.png`, then uncomment the image below.
-<!-- ![Target lane analysis and band results](docs/images/target-results.png) -->
-
-### 4. Export results
-
-Click **Save results**, choose CSV, XLSX, or JSON, and select an output location. XLSX puts **Lane summary** first and detailed **Band results** in a separate sheet.
-
-The export also writes companion reports to the same directory:
-
-| Output | Contents |
-| --- | --- |
-| Your selected CSV/XLSX/JSON file | Band estimates, selected marker group, uncertainty, confidence, warnings, and reporting text |
-| `lane_summary.csv` | One row per lane, with its band estimates |
-| `calibration_report.csv` | Marker back-calculation and local leave-one-out errors |
-| `fit_summary.csv` | Global fit and local cross-validation summary |
-| `calibration_diagnostic*.svg` | Marker points, global fit, local interpolation, and residuals |
-| `calibration_error_vs_mw*.svg` | Calibration errors versus marker molecular weight |
-
-**Use a separate output folder for each analysis.** Companion reports use fixed filenames and may overwrite earlier reports in the same folder. Exports are analysis outputs, not reloadable project/session files. Column names and scientific status codes remain English in either interface language for consistent downstream processing.
-
-## How molecular weight is estimated
-
-The recommended estimate uses the two neighboring markers and interpolates linearly in `log10(MW)`:
-
-```text
-log10(MW) = log10(MW1)
-          + (position - position1) / (position2 - position1)
-          × (log10(MW2) - log10(MW1))
-```
-
-A global linear fit is also calculated as a diagnostic, not as the default reported estimate. With multiple marker groups, selection prioritizes coverage of the target band, then estimated uncertainty and other quality criteria. Local leave-one-out calibration errors and peak widths contribute to the uncertainty estimate.
-
-Results are **apparent molecular weights**, not exact protein masses. The uncertainty range is a heuristic diagnostic, not a validated statistical confidence interval. Out-of-range bands are flagged as extrapolations with very low confidence and preferentially reported as above/below the calibrated range. A high R² cannot remove systematic effects from gel composition, transfer, glycosylation, aggregation, or unusual migration.
-
-## Use the calculation API
 
 The numerical core does not require a graphical display:
 
@@ -225,55 +230,19 @@ print(result.confidence)
 
 Run from the repository root with its virtual environment active, or install the package into that environment with `python -m pip install -e .`. Use consistent pixel coordinates for markers and target positions.
 
-## Build a standalone macOS app
+### Source layout
 
-```bash
-python3 -m venv .venv-build
-.venv-build/bin/python -m pip install -r requirements-build-lock.txt
-.venv-build/bin/python scripts/build_app.py
-open "dist/WB Marker.app"
-```
+- `wb_tools/core.py`: calibration, peak detection, uncertainty, and result organization.
+- `wb_tools/imaging.py`: lane intensity sampling.
+- `wb_tools/gui.py`: interface and export workflow.
+- `wb_tools/presets.py`: named ladder values and reference colors.
+- `wb_tools/i18n.py`: English/Chinese messages and preferences.
+- `tests/`: calculation and GUI regression tests.
 
-The lock file records the dependency versions from the tested build; `requirements-build.txt` provides version ranges if you intentionally want to update them. The build bundles Python, Tk, Pillow, and openpyxl. It must be run on macOS with a working Tk-enabled Python; architecture follows that Python interpreter.
+User settings are stored under `~/Library/Application Support/WB Marker/`. The historical SprB builder is not included in this checkout; its old instructions are retained in [the archived notes](docs/sprb-legacy.md).
 
-Output: **`dist/WB Marker.app`**. See [the build guide](docs/packaging.md) for packaging a ZIP, verification, and distribution limitations. Build artifacts are ignored by Git.
+## AI disclosure and acknowledgments
 
-## Troubleshooting
+WB Marker is independently developed and maintained by [Tsutayaaa](https://github.com/Tsutayaaa). The project’s direction, feature decisions, and final review are the developer’s responsibility.
 
-| Problem | What to check |
-| --- | --- |
-| `_tkinter` is missing or no window opens from source | Run `python3 -m tkinter`; recreate the environment with a Tk-enabled interpreter. |
-| `PIL` or `openpyxl` is missing | Activate `.venv` and run `python -m pip install -r requirements.txt`. |
-| The app cannot open on this Mac | Confirm the app architecture matches the Mac. Current packaged builds target Apple Silicon. |
-| Few peaks, too many peaks, or incorrect bands | Check image polarity, lane placement, half-width, smoothing, prominence, and peak spacing; edit peaks manually. |
-| Calibration fails | Assign at least two finite, positive kDa values at distinct positions, descending along migration. |
-| Results differ between channels | Confirm identical pixel alignment and dimensions; the app does not align images. |
-| Language has not changed | Save results, quit, and reopen. Check CLI/environment overrides if running from source. |
-| Custom presets cannot be saved | Check write access to `~/Library/Application Support/WB Marker/`. |
-| Older exports disappear | Save each analysis in a different directory to avoid overwriting companion reports. |
-
-## Development and repository layout
-
-```text
-wb_tools/
-  core.py             # Numerical calibration, peak detection, and result organization
-  imaging.py          # Lane intensity sampling
-  gui.py              # Tk interface and export workflow
-  i18n.py             # English/Chinese messages and language preferences
-  presets.py          # Named ladder products, nominal values, and reference colors
-scripts/build_app.py  # macOS standalone build
-tests/                # Regression and language tests
-docs/                 # Guides and screenshot locations
-main.py               # Compatible source entry point
-wb_marker_tool.py     # Legacy import/launch compatibility
-```
-
-```bash
-source .venv/bin/activate
-python -m pip install -r requirements-dev.txt
-python -m pytest -q
-# Optional: real-window layout and interaction tests on a desktop session
-WB_MARKER_GUI_TESTS=1 python -m pytest -q
-```
-
-The current checkout contains the WB Marker implementation. The SprB sequence builder mentioned in an earlier README is **not present**; its historical instructions are retained in [docs/sprb-legacy.md](docs/sprb-legacy.md) for reference, not as working commands.
+OpenAI Codex was used as an AI development assistant for implementation, refactoring, debugging, testing, packaging, and documentation. Special thanks to Codex for its efficient assistance and ability to turn ideas into working features.

@@ -44,7 +44,7 @@ def test_responsive_pages_and_foldouts(app):
 def test_product_colors_survive_group_switches(app):
     from PIL import Image
     from wb_tools.presets import PRODUCT_PRESETS, ORANGE, BLUE
-    plus, standard = PRODUCT_PRESETS
+    plus, standard = list(PRODUCT_PRESETS)[:2]
     app.images = [("synthetic.png", Image.new("RGB", (100, 200), "white"))]
     app.current_image_index = 0
     app.image_combo.configure(values=["synthetic.png"])

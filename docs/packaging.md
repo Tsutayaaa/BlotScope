@@ -37,7 +37,7 @@ The English/Chinese message catalog is a Python module and is included automatic
 ## Package a ZIP
 
 ```bash
-ditto -c -k --sequesterRsrc --keepParent   "dist/WB Marker.app" "dist/WB-Marker-macOS-arm64.zip"
+ditto -c -k --sequesterRsrc --keepParent   "dist/WB Marker.app" "dist/WB-Marker-v1.0.0-macOS-arm64.zip"
 ```
 
 Use the `arm64` filename only for an arm64 build. Share the complete app bundle; never share only `Contents/MacOS/WB Marker`. Recipients can extract the ZIP, drag the app to Applications, and launch without Python.

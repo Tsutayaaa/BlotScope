@@ -1,44 +1,99 @@
-# 中文使用说明
+# WB Marker 中文说明
 
-v0.4.0：分析面板自适应宽度，无需左右滚动。高级峰检测、Marker 组管理、自定义预设/锚点排列和校准诊断默认折叠。结果表保留常用列，选中条带后展开“所选条带详情”查看完整信息。新增 PageRuler Plus（10–250 kDa）及 PageRuler（10–180 kDa）具名预设与彩色参考条带；注意普通 PageRuler 的 25 kDa 是蓝色，只有 Plus 的 25 kDa 为橙红色。
+<img src="WB%20logo.png" alt="WB Marker 图标" width="120">
 
-英文主说明及完整部署步骤见 [README](../README.md)。目前仅支持 macOS；打包版适用于 Apple Silicon，无需安装 Python。默认英文，可从 **Language / 语言** 菜单选择简体中文，保存结果后重启生效。源码也可运行 `python -m wb_tools --language zh`。自定义预设与语言设置保存在 `~/Library/Application Support/WB Marker/`。
+**在 Mac 上快速估算 Western blot 条带的表观分子量。**
 
-## WB Marker 分子量估算工具
+[English README](../README.md) · [下载 v1.0.0 正式版](https://github.com/Tsutayaaa/wb_tool/releases/tag/v1.0.0)
 
-一个本地运行的 GUI，用 WB 原图中 Marker lane 估算表观分子量（apparent molecular weight）。图片不会上传。
+## 作者说明
 
-支持一次导入多个对齐通道：可在 Marker 专用通道提取峰，切换到目标蛋白通道后仍共享同一条选线和像素坐标，并可直接点击目标条带。
+本工具由我独立开发，目的是帮助实验人员快速估算表观分子量、辅助实验判断，并通过明确的校准流程提高分析的一致性与可重复性。
 
-界面支持小屏幕：Marker 和目标分析页可用鼠标滚轮/触控板上下滚动；图片支持 `+`、`−`、一键适应窗口、滚动条，以及按住 Command（macOS）或 Control 后滚轮缩放。
+PAGE 和 Western blot 的迁移位置用于近似大小比较；条带强度在合适的实验条件下可支持半定量分析。本工具根据迁移位置估算表观分子量，不能确定蛋白身份或精确分子质量。输出不能独立作为证据，也不能单独支撑实验结论，应结合原始图像、实验对照与独立验证解释。
 
-## 安装与启动
+## 下载与安装
 
-需要 Python 3.10 或更高版本。
+1. 打开 [v1.0.0 Release](https://github.com/Tsutayaaa/wb_tool/releases/tag/v1.0.0)，从 **Assets** 下载 `WB-Marker-v1.0.0-macOS-arm64.zip`，不要选择自动生成的源码压缩包。
+2. 解压后将 **WB Marker.app** 拖到“应用程序”。
+3. 双击启动，**无需安装 Python 或依赖**。
 
-macOS 可直接双击 `run_wb_tool.command`；首次运行会在当前目录建立独立环境并安装运行依赖。也可以在终端手动运行：
+目前仅提供 **Apple Silicon Mac（M1 或更新芯片）**版本，不提供 Intel Mac、Windows 或 Linux 安装包。此版本未使用 Developer ID 签名或 Apple 公证。如果首次启动被拦截，确认来源可信后按 [Apple 官方说明](https://support.apple.com/zh-cn/102445)在“系统设置 → 隐私与安全”中允许打开。
 
-```bash
-python3 -m pip install -r requirements.txt
-python3 main.py
-```
+默认英文界面。在 **Language / 语言** 菜单选择“简体中文”，保存结果后退出并重启生效。更新时退出旧版本，再替换 App；自定义预设和语言设置会保留。
 
-macOS 如果系统 Python 缺少 Tkinter，建议安装 python.org 发行的 Python，或使用带 Tk 支持的 Conda Python。
+## 使用教程
 
-## 使用方法
+### 1. 导入图片与多通道
 
-1. 点击“导入多张图片”，支持 PNG、JPEG、TIFF 和 BMP。多通道应具有相同尺寸且已经像素对齐。
-2. 切换到 Marker 通道，选择“画 Marker 选线”，从加样孔方向沿 Marker lane 中心拖到胶底。每画一条线会新增一个独立的 `Marker 1 / Marker 2 / ...` 校准组。
-3. 在“Marker 泳道组”列表选择要编辑的组。每一组独立保存图片通道、选线、峰位置、峰宽、kDa、拟合和 CV 误差。
-4. 程序提取所选组的反相灰度强度并自动寻找暗条带峰。可调平滑、突出度、峰间距和选线宽度，再点“重新检测峰”。
-5. 在曲线上点击可以手动增加峰；点击已有峰附近可删除。双击表格的 kDa 单元格，填写该组对应的 Marker 分子量。
-6. 每组可分别选择内置或自定义预设。“应用完整预设”会依次填写当前选中的 Marker 组；也可从任一已知峰向下自动排列。
-7. 可继续在同一或其他图片通道画新的 Marker 泳道并分别赋值。完成后点击“完成 Marker 并立即拟合 →”，程序会拟合所有有效 Marker 组。
+点击 **1 Import images / 导入多张图片**。可在文件选择窗口按住 Command 多选，或按 Shift 连选，**一次导入多张** PNG、JPEG、TIFF 或 BMP 图片。请使用深色条带、浅色背景的图像。
 
-8. 在第二阶段切换到目标通道，选择“添加目标泳道”，从泳道顶部沿中心拖到泳道底部。选线半宽控制实际平均的泳道范围；每条泳道会自动检测全部峰。
-9. 在“已添加泳道”中选择任意泳道，可单独重新识别；点击其灰度曲线可手动增加或删除条带峰。
-10. 最终结果按 `Lane → Band` 展示采用的 Marker 组、局部估算值、不确定范围、可信度、建议报告文字和范围状态。
-11. 保存结果时可选择 CSV、XLSX 或 JSON，同时生成逐 Marker 校准报告和诊断图。
+WB 的 Marker 与目标蛋白信号可能位于不同图层。先从成像软件导出各通道图片，一起导入，再通过 **Channel / 当前通道** 切换。
+
+![一次导入合并图、Marker 图与目标蛋白图](images/multi_layers.png)
+
+- `Blot_sample_merge.tif`：合并图，用于观察整体位置，可选。
+- `Blot_sample_marker.tif`：Marker 通道，用于画线、赋值和拟合。
+- `Blot_sample_lanes.tif`：目标蛋白通道，用于画目标泳道并识别条带。
+
+在 Marker 通道完成定标后，可切换到目标通道继续分析，校准信息跨通道保留。图片必须预先完成像素对齐，并保持相同尺寸、裁剪、缩放和方向；App 不会自动配准图片。
+
+### 2. 画 Marker、自动填充预设并拟合
+
+1. 切换到 Marker 通道，选择 **Draw marker lane / 画 Marker 选线**。
+2. 从加样孔方向沿泳道中心向下拖动，自动识别峰。
+3. 在预设列表选择实际使用的产品，点击 **Apply full preset / 应用完整预设**。
+4. 核对峰与 kDa 的对应关系，再点击 **Fit markers & continue / 完成 Marker 并立即拟合**。
+
+![画 Marker 泳道、自动填写预设并拟合](images/draw_the_marker_line.gif)
+
+预设按峰顺序填写，不会自动判断产品身份或缺失条带。多余峰、弱峰或漏峰可能造成错位。点击灰度曲线可增删峰，双击 kDa 单元格可修改分子量，无法确定的峰可留空。至少需要两个位置不同、kDa 随迁移方向递减的已知峰。
+
+需要调整时展开“高级峰检测参数”；画多条 Marker 泳道后，展开“管理 Marker 泳道组”切换或删除组。“校准诊断详情”提供拟合和交叉验证信息。
+
+### 3. 画目标泳道并查看结果
+
+1. 拟合完成后进入目标分析页，按需切换至目标蛋白通道。
+2. 选择 **Add target lane / 添加目标泳道**，沿泳道中心从上向下拖动。
+3. 查看原图与灰度曲线中的条带标点，可继续添加多个泳道。
+4. 在泳道列表中选择泳道，检查检测峰；点击曲线可手动增删。
+5. 结果表显示泳道、条带、建议报告和可信度；选中结果并展开“所选条带详情”查看 Marker 组、局部估计、不确定范围和范围状态。
+
+![目标泳道分析与条带结果](images/target_analysis.gif)
+
+若需调整参数，展开“高级峰检测参数”后重新识别所选泳道。斜泳道、胶畸变与通道错位均可能影响估算，应人工核对。
+
+### 4. 保存与导出
+
+点击 **Save results / 保存结果**，选择 CSV、XLSX 或 JSON。Excel 的 `Lane summary` 为泳道汇总，`Band results` 为逐条带详细结果；同时输出校准报告、拟合汇总和 SVG 诊断图。
+
+**每次分析请使用独立输出文件夹**，避免覆盖同名附属报告。导出文件不是可恢复的分析工程，退出前请保存结果。切换语言需要重启，也请先保存。
+
+## 内置 Marker 与自定义预设
+
+![具名产品及通用 Marker 预设](images/marker_selection.png)
+
+| 品牌与产品 | 分子量（kDa，从高到低） | 参考色带 |
+| --- | --- | --- |
+| Thermo Scientific PageRuler Plus，10–250 kDa，26619 / 26620 | 250、130、100、70、55、35、25、15、10 | 70/25 橙红；10 绿；其余蓝 |
+| Thermo Scientific PageRuler，10–180 kDa，26616 / 26617 | 180、130、100、70、55、40、35、25、15、10 | 70 橙红；10 绿；其余含 25 均为蓝 |
+| Solarbio 三色预染蛋白 Marker，20–600 kDa，PR2090 | 600、400、250、230、130、110、75、45、20 | 75 红；20 绿；其余蓝 |
+| 通用 170–10 kDa（未指定品牌） | 170、130、100、70、55、40、35、25、15、10 | 无产品专属色带 |
+
+旧的通用 `600–20 kDa` 入口仍保留；使用 Solarbio 具名预设可显示对应产品与参考颜色。色带仅辅助核对，不代表自动识别条带身份。
+
+**任意品牌都可以自行设置预设：**
+
+1. 展开“自定义预设与锚点排列”。
+2. 输入从高到低的分子量列表，用空格或逗号分隔。
+3. 点击“另存为新预设”，填写品牌或产品名称。
+4. 选择保存后的预设并应用，核对对应关系。
+
+![填写并保存自定义 Marker 预设](images/maker_customize.gif)
+
+预设在下次启动后保留。如果只显示部分梯子，可选中已知峰，设置锚点 kDa，再从该峰向下自动排列。自定义预设保存分子量，专属参考颜色由内置产品提供。
+
+产品资料：[Solarbio PR2090](https://www.solarbio.com/goodsInfo?id=365799) · [PageRuler Plus](https://www.thermofisher.com/order/catalog/product/26619) · [PageRuler](https://www.thermofisher.com/order/catalog/product/26616)。
 
 ## 分子量计算方法
 
@@ -123,3 +178,22 @@ range_status, confidence, reported_MW, reported_MW_text, warnings
 - `R²` 反映这些 Marker 点在线性模型下的一致性，但不能消除胶浓度、转膜、糖基化、聚集或 SDS 结合异常带来的系统误差。
 - 超出 Marker 覆盖范围属于外推，应报告较宽范围或 `> 某值`，不要给出虚假的小数精度。
 - 工具输出应写作“表观分子量约为 … kDa”，而非精确真实分子量。
+
+## 开发与源码
+
+需要 macOS、Python 3.10+ 和可用的 Tk。完整开发和打包说明见 [英文 README](../README.md#for-developers) 与 [打包指南](packaging.md)。
+
+```bash
+git clone https://github.com/Tsutayaaa/wb_tool.git
+cd wb_tool
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m wb_tools --language zh
+```
+
+用户设置保存在 `~/Library/Application Support/WB Marker/`。
+
+## AI 声明与致谢
+
+本工具由 [Tsutayaaa](https://github.com/Tsutayaaa) 独立开发与维护，项目方向、功能取舍及最终审核由开发者负责。开发过程中使用 OpenAI Codex 辅助实现、重构、调试、测试、打包与文档编写。感谢 Codex 提供的高效帮助，以及将想法落实为可用功能的能力。

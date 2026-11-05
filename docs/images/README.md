@@ -1,9 +1,10 @@
-# App screenshots
+# README demonstration assets
 
-Add these screenshots, then uncomment the matching Markdown image lines in the root README:
+- `draw_the_marker_line.gif`: draw a marker lane, apply a preset, and fit calibration.
+- `target_analysis.gif`: draw target lanes and inspect detected bands and results.
+- `multi_layers.png`: separately imported merge, marker, and target channels.
 
-- `main-window.png`: English main window with a representative image loaded.
-- `marker-calibration.png`: marker profile, known kDa assignments, and fit summary.
-- `target-results.png`: selected target lane, peaks, and band results.
+The root README embeds these files using relative paths. Keep original filenames when replacing a demonstration, or update the corresponding README links.
 
-Use PNG images with readable UI text. Remove private filenames or experimental identifiers before publication. Keep screenshots consistent with the current app version.
+- `marker_selection.png`: available named and generic marker presets.
+- `maker_customize.gif`: enter molecular weights and save a custom marker preset.
