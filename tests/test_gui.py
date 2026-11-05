@@ -68,3 +68,33 @@ def test_product_colors_survive_group_switches(app):
     app._show_result_details()
     assert "Marker 2" in app.result_details.get("1.0", "end")
     assert "60–80" in app.result_details.get("1.0", "end")
+
+
+def test_detected_target_bands_are_drawn_on_image_and_profile(app):
+    from PIL import Image, ImageDraw
+    from wb_tools.core import linear_fit
+    image = Image.new("RGB", (100, 200), "white")
+    draw = ImageDraw.Draw(image)
+    for y in (40, 100, 160):
+        draw.rectangle((35, y-3, 65, y+3), fill="black")
+    app.images = [("synthetic.png", image)]
+    app.current_image_index = 0
+    app.image_combo.configure(values=["synthetic.png"])
+    app.line_start, app.line_end = (10, 0), (10, 199)
+    app.peaks = [10, 190]
+    app.peak_kda = {10: "100", 190: "10"}
+    app.fit_result = linear_fit(app.peaks, [100, 10])
+    app.workflow_notebook.tab(1, state="normal")
+    app.workflow_notebook.select(1)
+    app.update()
+    app.add_target_lane((50, 0), (50, 199))
+    lane = app.target_lanes[0]
+    assert len(lane.peaks) == 3
+    app.on_lane_selected()
+    for canvas in (app.image_canvas, app.target_plot):
+        points = [item for item in canvas.find_all() if canvas.type(item) == "oval"]
+        assert len(points) == len(lane.peaks)
+        assert all(canvas.coords(item)[2] > canvas.coords(item)[0] for item in points)
+    app.zoom_image(1.25)
+    app.reanalyze_selected_lane()
+    assert len([item for item in app.target_plot.find_all() if app.target_plot.type(item) == "oval"]) == 3

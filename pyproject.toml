@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "wb-tools"
-version = "0.4.0"
+version = "0.4.1"
 description = "Local Western blot marker calibration and apparent molecular weight estimation"
 requires-python = ">=3.10"
 dependencies = ["Pillow>=10.0", "openpyxl>=3.1"]

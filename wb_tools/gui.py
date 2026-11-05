@@ -713,7 +713,7 @@ class WBMarkerApp(tk.Tk):
                 if peak >= len(lane.sample_points):
                     continue
                 x, y = self._to_canvas(lane.sample_points[peak])
-                self.image_canvas.create_oval(x - 4, y - 4, x + 4, y + 4, outline=self._peak_color(p), width=2, tags="selection")
+                self.image_canvas.create_oval(x - 4, y - 4, x + 4, y + 4, outline="#d32f2f", width=2, tags="selection")
 
     def _draw_other_marker_lanes(self) -> None:
         for index, lane in enumerate(self.marker_lanes):
@@ -863,8 +863,8 @@ class WBMarkerApp(tk.Tk):
         for peak in lane.peaks:
             x = margin + peak / max(1, len(values) - 1) * (w - 2 * margin)
             y = h - margin - (values[peak] - low) / span * (h - 2 * margin)
-            self.target_plot.create_line(x, h - margin, x, y, fill=self._peak_color(p), dash=(3, 2))
-            self.target_plot.create_oval(x - 3, y - 3, x + 3, y + 3, fill=self._peak_color(p), outline="")
+            self.target_plot.create_line(x, h - margin, x, y, fill="#d32f2f", dash=(3, 2))
+            self.target_plot.create_oval(x - 3, y - 3, x + 3, y + 3, fill="#d32f2f", outline="")
         self.target_plot.create_text(margin, h - 4, text=_('泳道起点'), anchor=tk.SW, fill="#555")
         self.target_plot.create_text(w - margin, h - 4, text=_('泳道终点'), anchor=tk.SE, fill="#555")
 
