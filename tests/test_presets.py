@@ -1,5 +1,5 @@
-from wb_tools.core import BUILTIN_PRESETS, prepare_markers
-from wb_tools.presets import PRODUCT_PRESETS, band_color, BLUE, ORANGE, GREEN
+from blotscope.core import BUILTIN_PRESETS, prepare_markers
+from blotscope.presets import PRODUCT_PRESETS, band_color, BLUE, ORANGE, GREEN
 
 PLUS, STANDARD = list(PRODUCT_PRESETS)[:2]
 
@@ -25,7 +25,7 @@ def test_reference_colors_are_product_specific():
 
 
 def test_solarbio_pr2090_values_and_colors():
-    from wb_tools.presets import RED
+    from blotscope.presets import RED
     name = "Solarbio PR2090 (20–600 kDa)"
     assert BUILTIN_PRESETS[name] == [600, 400, 250, 230, 130, 110, 75, 45, 20]
     assert band_color(name, 75) == RED

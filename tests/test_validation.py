@@ -1,6 +1,6 @@
 import math
 import pytest
-from wb_tools.core import prepare_markers, linear_fit, parse_preset_values
+from blotscope.core import prepare_markers, linear_fit, parse_preset_values
 
 @pytest.mark.parametrize("bad", [math.nan, math.inf, -math.inf])
 def test_nonfinite_calibration_is_rejected(bad):

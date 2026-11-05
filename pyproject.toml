@@ -3,18 +3,18 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "wb-tools"
-version = "1.0.0"
+name = "blotscope"
+version = "1.0.1"
 description = "Local Western blot marker calibration and apparent molecular weight estimation"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}
 dependencies = ["Pillow>=10.0", "openpyxl>=3.1"]
 
 [project.gui-scripts]
-wb-marker = "wb_tools.gui:main"
+blotscope = "blotscope.gui:main"
 
 [tool.setuptools.packages.find]
-include = ["wb_tools*"]
+include = ["blotscope*", "wb_tools*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

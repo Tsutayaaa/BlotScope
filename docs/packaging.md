@@ -1,4 +1,4 @@
-# Build and distribute WB Marker for macOS
+# Build and distribute BlotScope for macOS
 
 Only macOS app builds are currently supported. The locally verified build uses Apple Silicon (arm64) and Python 3.12. This is not a universal binary; Intel support has not been verified.
 
@@ -18,12 +18,12 @@ Close the Tk demo window before building. The lock file records tested dependenc
 
 ```bash
 .venv-build/bin/python scripts/build_app.py
-open "dist/WB Marker.app"
+open "dist/BlotScope.app"
 ```
 
-PyInstaller bundles the interpreter, Tk runtime, Pillow, and openpyxl into `dist/WB Marker.app`. The build uses the architecture of the Python interpreter that runs it. `build/` and `dist/` are generated and ignored by Git. Rebuilding replaces the previous same-name build output.
+PyInstaller bundles the interpreter, Tk runtime, Pillow, and openpyxl into `dist/BlotScope.app`. The build uses the architecture of the Python interpreter that runs it. `build/` and `dist/` are generated and ignored by Git. Rebuilding replaces the previous same-name build output.
 
-The English/Chinese message catalog is a Python module and is included automatically. Custom presets and language preferences are stored under `~/Library/Application Support/WB Marker/`, not inside the app bundle.
+The English/Chinese message catalog is a Python module and is included automatically. Custom presets and language preferences are stored under `~/Library/Application Support/BlotScope/`, not inside the app bundle.
 
 ## Verify before sharing
 
@@ -37,10 +37,10 @@ The English/Chinese message catalog is a Python module and is included automatic
 ## Package a ZIP
 
 ```bash
-ditto -c -k --sequesterRsrc --keepParent   "dist/WB Marker.app" "dist/WB-Marker-v1.0.0-macOS-arm64.zip"
+ditto -c -k --sequesterRsrc --keepParent   "dist/BlotScope.app" "dist/BlotScope-v1.0.1-macOS-arm64.zip"
 ```
 
-Use the `arm64` filename only for an arm64 build. Share the complete app bundle; never share only `Contents/MacOS/WB Marker`. Recipients can extract the ZIP, drag the app to Applications, and launch without Python.
+Use the `arm64` filename only for an arm64 build. Share the complete app bundle; never share only `Contents/MacOS/BlotScope`. Recipients can extract the ZIP, drag the app to Applications, and launch without Python.
 
 ## Signing and distribution status
 

@@ -1,15 +1,2 @@
 #!/bin/zsh
-set -e
-
-SCRIPT_DIR="${0:A:h}"
-cd "$SCRIPT_DIR"
-
-if [[ ! -x ".venv/bin/python" ]]; then
-  python3 -m venv .venv
-fi
-
-if ! .venv/bin/python -c "import PIL, openpyxl" 2>/dev/null; then
-  .venv/bin/python -m pip install -r requirements.txt
-fi
-
-exec .venv/bin/python main.py
+exec "${0:A:h}/run_blotscope.command" "$@"

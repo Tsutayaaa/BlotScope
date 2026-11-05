@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""PyCharm-friendly entry point for the WB Marker tool."""
+"""PyCharm-friendly entry point for the BlotScope tool."""
 
 from wb_marker_tool import main
 

@@ -2,7 +2,7 @@ import ast
 from pathlib import Path
 from string import Formatter
 import pytest
-from wb_tools import i18n
+from blotscope import i18n
 
 @pytest.fixture(autouse=True)
 def restore_language():
@@ -29,7 +29,7 @@ def test_all_message_placeholders_match():
 
 
 def test_all_translation_calls_have_english_messages():
-    root = Path(__file__).resolve().parents[1] / 'wb_tools'
+    root = Path(__file__).resolve().parents[1] / 'blotscope'
     for filename in ('gui.py', 'core.py'):
         for node in ast.walk(ast.parse((root / filename).read_text())):
             if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == '_':
@@ -51,7 +51,7 @@ def test_preferences_and_override(tmp_path, monkeypatch):
 
 
 def test_readme_api_example():
-    from wb_tools.core import prepare_markers, linear_fit, estimate_band
+    from blotscope.core import prepare_markers, linear_fit, estimate_band
     positions = [25, 94, 124, 141, 215, 307, 362, 422, 478]
     weights = [600, 400, 250, 230, 130, 110, 75, 45, 20]
     result = estimate_band(prepare_markers(positions, weights), linear_fit(positions, weights), position_px=94.3, peak_width_px=8)

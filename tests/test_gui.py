@@ -6,7 +6,7 @@ pytestmark = pytest.mark.skipif(os.environ.get("WB_MARKER_GUI_TESTS") != "1", re
 
 @pytest.fixture(params=["en", "zh"])
 def app(request, tmp_path, monkeypatch):
-    from wb_tools import gui, i18n
+    from blotscope import gui, i18n
     old = i18n._language
     i18n.set_language(request.param)
     monkeypatch.setattr(gui, "config_dir", lambda: tmp_path)
@@ -43,7 +43,7 @@ def test_responsive_pages_and_foldouts(app):
 
 def test_product_colors_survive_group_switches(app):
     from PIL import Image
-    from wb_tools.presets import PRODUCT_PRESETS, ORANGE, BLUE
+    from blotscope.presets import PRODUCT_PRESETS, ORANGE, BLUE
     plus, standard = list(PRODUCT_PRESETS)[:2]
     app.images = [("synthetic.png", Image.new("RGB", (100, 200), "white"))]
     app.current_image_index = 0
@@ -72,7 +72,7 @@ def test_product_colors_survive_group_switches(app):
 
 def test_detected_target_bands_are_drawn_on_image_and_profile(app):
     from PIL import Image, ImageDraw
-    from wb_tools.core import linear_fit
+    from blotscope.core import linear_fit
     image = Image.new("RGB", (100, 200), "white")
     draw = ImageDraw.Draw(image)
     for y in (40, 100, 160):

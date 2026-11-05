@@ -13,28 +13,28 @@ root = Path(__file__).resolve().parents[1]
 
 # Generate a multi-resolution macOS icon from the supplied artwork.
 from PIL import Image, ImageOps
-icon_source = root / "docs" / "WB logo.png"
-icon_path = root / "build" / "WB Marker.icns"
+icon_source = root / "docs" / "blotscope-logo.png"
+icon_path = root / "build" / "BlotScope.icns"
 icon_path.parent.mkdir(parents=True, exist_ok=True)
 with Image.open(icon_source) as source:
     icon = ImageOps.pad(source.convert("RGBA"), (1024, 1024),
                         method=Image.Resampling.LANCZOS, color=(0, 0, 0, 0))
     icon.save(icon_path, format="ICNS")
 command = [sys.executable, "-m", "PyInstaller", "--noconfirm", "--clean",
-           "--windowed", "--onedir", "--name", "WB Marker",
+           "--windowed", "--onedir", "--name", "BlotScope",
            "--icon", str(icon_path),
            "--distpath", str(root / "dist"), "--workpath", str(root / "build"),
            "--specpath", str(root / "build"), "--paths", str(root)]
 if sys.platform == "darwin":
-    command += ["--osx-bundle-identifier", "com.tsutayaaa.wbmarker"]
+    command += ["--osx-bundle-identifier", "com.tsutayaaa.blotscope"]
 command.append(str(root / "main.py"))
 env = dict(os.environ, PYINSTALLER_CONFIG_DIR=str(root / "build" / "pyinstaller-cache"))
 subprocess.run(command, cwd=root, env=env, check=True)
 
 # Keep Finder's app version aligned with the package version.
 version = re.search(r'__version__ = "([^"]+)"',
-                    (root / "wb_tools" / "__init__.py").read_text()).group(1)
-app = root / "dist" / "WB Marker.app"
+                    (root / "blotscope" / "__init__.py").read_text()).group(1)
+app = root / "dist" / "BlotScope.app"
 plist_path = app / "Contents" / "Info.plist"
 with plist_path.open("rb") as handle:
     info = plistlib.load(handle)

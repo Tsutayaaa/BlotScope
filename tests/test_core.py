@@ -2,7 +2,7 @@ import math
 import unittest
 from dataclasses import replace
 
-from wb_tools.core import (
+from blotscope.core import (
     detect_peaks,
     choose_best_marker_estimate,
     estimate_band,

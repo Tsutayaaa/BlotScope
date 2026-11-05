@@ -1,4 +1,4 @@
-from .gui import main
+from blotscope.gui import main
 
 if __name__ == "__main__":
     main()

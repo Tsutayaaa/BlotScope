@@ -1,2 +1,2 @@
-"""WB analysis tools."""
-__version__ = "1.0.0"
+"""Compatibility package; use blotscope for new code."""
+from blotscope import __version__

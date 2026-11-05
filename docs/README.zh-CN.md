@@ -1,17 +1,17 @@
-# WB Marker 中文说明
+# BlotScope 中文说明
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
-![README views](https://komarev.com/ghpvc/?username=Tsutayaaa-wb-tool&label=README%20views&color=blue)
-[![Downloads](https://img.shields.io/github/downloads/Tsutayaaa/wb_tool/total?label=Downloads)](https://github.com/Tsutayaaa/wb_tool/releases)
+![README views](https://komarev.com/ghpvc/?username=Tsutayaaa-blotscope&label=README%20views&color=blue)
+[![Downloads](https://img.shields.io/github/downloads/Tsutayaaa/blotscope/total?label=Downloads)](https://github.com/Tsutayaaa/blotscope/releases)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![Platform](https://img.shields.io/badge/macOS-Apple%20Silicon-black?logo=apple&logoColor=white)
-[![Release](https://img.shields.io/github/v/release/Tsutayaaa/wb_tool)](https://github.com/Tsutayaaa/wb_tool/releases/latest)
+[![Release](https://img.shields.io/github/v/release/Tsutayaaa/blotscope)](https://github.com/Tsutayaaa/blotscope/releases/latest)
 
-<img src="WB%20logo.png" alt="WB Marker 图标" width="120">
+<img src="blotscope-logo.png" alt="BlotScope 图标" width="120">
 
 **在 Mac 上快速估算 Western blot 条带的表观分子量。**
 
-[English README](../README.md) · [下载 v1.0.0 正式版](https://github.com/Tsutayaaa/wb_tool/releases/tag/v1.0.0)
+[English README](../README.md) · [下载 v1.0.1 正式版](https://github.com/Tsutayaaa/blotscope/releases/tag/v1.0.1)
 
 ## 作者说明
 
@@ -21,8 +21,8 @@ PAGE 和 Western blot 的迁移位置用于近似大小比较；条带强度在�
 
 ## 下载与安装
 
-1. 打开 [v1.0.0 Release](https://github.com/Tsutayaaa/wb_tool/releases/tag/v1.0.0)，从 **Assets** 下载 `WB-Marker-v1.0.0-macOS-arm64.zip`，不要选择自动生成的源码压缩包。
-2. 解压后将 **WB Marker.app** 拖到“应用程序”。
+1. 打开 [v1.0.1 Release](https://github.com/Tsutayaaa/blotscope/releases/tag/v1.0.1)，从 **Assets** 下载 `BlotScope-v1.0.1-macOS-arm64.zip`，不要选择自动生成的源码压缩包。
+2. 解压后将 **BlotScope.app** 拖到“应用程序”。
 3. 双击启动，**无需安装 Python 或依赖**。
 
 目前仅提供 **Apple Silicon Mac（M1 或更新芯片）**版本，不提供 Intel Mac、Windows 或 Linux 安装包。此版本未使用 Developer ID 签名或 Apple 公证。如果首次启动被拦截，确认来源可信后按 [Apple 官方说明](https://support.apple.com/zh-cn/102445)在“系统设置 → 隐私与安全”中允许打开。
@@ -191,15 +191,15 @@ range_status, confidence, reported_MW, reported_MW_text, warnings
 需要 macOS、Python 3.10+ 和可用的 Tk。完整开发和打包说明见 [英文 README](../README.md#for-developers) 与 [打包指南](packaging.md)。
 
 ```bash
-git clone https://github.com/Tsutayaaa/wb_tool.git
-cd wb_tool
+git clone https://github.com/Tsutayaaa/blotscope.git
+cd blotscope
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
-python -m wb_tools --language zh
+python -m blotscope --language zh
 ```
 
-用户设置保存在 `~/Library/Application Support/WB Marker/`。
+用户设置保存在 `~/Library/Application Support/BlotScope/`。
 
 ## AI 声明与致谢
 
