@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wb-tools"
+version = "0.4.0"
+description = "Local Western blot marker calibration and apparent molecular weight estimation"
+requires-python = ">=3.10"
+dependencies = ["Pillow>=10.0", "openpyxl>=3.1"]
+
+[project.gui-scripts]
+wb-marker = "wb_tools.gui:main"
+
+[tool.setuptools.packages.find]
+include = ["wb_tools*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
